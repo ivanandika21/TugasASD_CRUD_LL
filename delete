@@ -1,19 +1,18 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-struct data
-{
+struct data {
 	int info;
 	struct data * next;
 };
 
-struct data *start = NULL;
+struct data * start = NULL;
 
-int menu_utama(){
+int menu_utama() {
 	int pilih;
-	
-	while(1){
-        system("cls");
+
+	while (1) {
+		system("cls");
 		printf(" ----------------------------------------\n");
 		printf(" ================= MENU =================\n");
 		printf(" ----------------------------------------\n\n");
@@ -23,34 +22,46 @@ int menu_utama(){
 		printf(" 4. Update Data\n");
 		printf(" 5. Keluar\n");
 		printf(" Silakan masukkan pilihan anda : ");
-		scanf("%i", &pilih);
-		switch (pilih){
-			case 1: {
-				menu1(); //menu 1 berisi read saja
-				printf(" "); system("pause"); menu_utama();
-			}
-			case 2: {
-				menu2(); //menu 2 berisi Input Head dan Input Tail
-				printf(" "); system("pause"); menu_utama();
-			}
-			case 3: {
-				menu3(); //menu 3 berisi Delete Head dan Delete Tails (Delete "angka" opsional)
-				printf(" "); system("pause"); menu_utama();
-			}
-			case 4: {
-				menu4(); //menu 4 berisi Update data menggunakan perulangan sampai scanf == "angka"
-				printf(" "); system("pause"); menu_utama();
-			}
-			case 5: {
-				menu5(); //keluar program
-			}
+		scanf("%i", & pilih);
+		switch (pilih) {
+		case 1: {
+			menu1(); //menu 1 berisi read saja
+			printf(" ");
+			system("pause");
+			menu_utama();
+		}
+
+		case 2: {
+			menu2(); //menu 2 berisi Input Head dan Input Tail
+			printf(" ");
+			system("pause");
+			menu_utama();
+		}
+
+		case 3: {
+			menu3(); //menu 3 berisi Delete Head dan Delete Tails (Delete "angka" opsional)
+			printf(" ");
+			system("pause");
+			menu_utama();
+		}
+
+		case 4: {
+			menu4(); //menu 4 berisi Update data menggunakan perulangan sampai scanf == "angka"
+			printf(" ");
+			system("pause");
+			menu_utama();
+		}
+
+		case 5: {
+			menu5(); //keluar program
+		}
 		}
 	}
 }
 
-void menu1(){
-	int nomor;
-	
+void menu1() {
+	int nomor = 0;
+
 	system("cls");
 	printf(" ----------------------------------------\n");
 	printf(" ========== MENU 1 - Read Data ==========\n");
@@ -58,24 +69,45 @@ void menu1(){
 	struct data * alamat;
 	if (start == NULL) {
 		printf(" Maaf, Anda belum memasukkan data.\n");
-	}else {
+	} else {
 		alamat = start;
 		printf(" Linked List yang telah dibuat adalah :\n");
 		printf(" --------------------\n");
 		printf("  No.\t Isi\n");
 		printf(" --------------------\n");
 		while (alamat != NULL) {
-			printf("  %i\t %d\n", nomor+1, alamat->info);
-			alamat = alamat->next;
+			printf("  %i\t %d\n", nomor + 1, alamat -> info);
+			alamat = alamat -> next;
 			nomor++;
 		}
 		printf(" --------------------\n");
 	}
 }
 
-void menu2(){
+void listaja(){
+    struct data * alamat;
+    int nomor = 0;
+    
+	if (start == NULL) {
+		printf(" Maaf, Anda belum memasukkan data.\n");
+	} else {
+		alamat = start;
+		printf(" Linked List yang telah dibuat adalah :\n");
+		printf(" --------------------\n");
+		printf("  No.\t Isi\n");
+		printf(" --------------------\n");
+		while (alamat != NULL) {
+			printf("  %i\t %d\n", nomor + 1, alamat -> info);
+			alamat = alamat -> next;
+			nomor++;
+		}
+		printf(" --------------------\n");
+	}
+}
+
+void menu2() {
 	int pilih;
-	
+
 	system("cls");
 	printf(" ----------------------------------------\n");
 	printf(" ========= MENU 2 - Insert Data =========\n");
@@ -84,293 +116,241 @@ void menu2(){
 	printf(" 2. Insert Tail\n");
 	printf(" 3. Menu Utama\n");
 	printf(" Silakan masukkan pilihan anda : ");
-	scanf("%i", &pilih);
-	if (pilih == 1){
+	scanf("%i", & pilih);
+	if (pilih == 1) {
 		insert_begin();
-	}
-	else if (pilih == 2){
+	} else if (pilih == 2) {
 		insert_end();
-	}
-	else if (pilih == 3){
+	} else if (pilih == 3) {
 		menu_utama();
 	}
 }
 
-void menu3(){
+void menu3() {
 	int pilih;
-	
+
 	system("cls");
 	printf(" ----------------------------------------\n");
 	printf(" ========= MENU 3 - Delete Data =========\n");
 	printf(" ----------------------------------------\n\n");
+	listaja();
 	printf(" 1. Delete Head\n");
 	printf(" 2. Delete Tail\n");
 	printf(" 3. Menu Utama\n");
 	printf(" Silakan masukkan pilihan anda : ");
-	scanf("%i", &pilih);
-	if (pilih == 1){
-		insert_begin();
-	}
-	else if (pilih == 2){
+	scanf("%i", & pilih);
+	if (pilih == 1) {
+		delete_begin();
+	} else if (pilih == 2) {
 		delete_end();
-	}
-	else if (pilih == 3){
+	} else if (pilih == 3) {
 		menu_utama();
 	}
 }
 
-void menu4(){
+void menu4() {
 	int ubah, jadi;
-	
+
 	system("cls");
 	printf(" ----------------------------------------\n");
 	printf(" ========= MENU 4 - Update Data =========\n");
 	printf(" ----------------------------------------\n\n");
-	//tampilkan listnya dulu
+	listaja();
 	printf(" Pilih data yang akan diubah : ");
-	scanf("%i", &ubah);
+	scanf("%i", & ubah);
 	printf(" Pilih data yang baru : ");
-	scanf("%i", &jadi);
+	scanf("%i", & jadi);
 }
 
-void menu5(){
+void menu5() {
 	printf("\n Byebye!\n ");
 	printf("Ivan Andika Surya, 2021\n");
 	exit(EXIT_SUCCESS);
 }
 
-
 //==================================================================================== ALGORITMA ======
-void create()
-{
-	struct data *temp, *alamat;
-	temp = (struct data *) malloc(sizeof(struct data));
-	if (temp == NULL)
-	{
-		printf("\nOut of Memory Space:\n");
+void create() {
+	struct data * temp, * alamat;
+	temp = (struct data * ) malloc(sizeof(struct data));
+	if (temp == NULL) {
+		printf("\nOut of Memory Space\n");
 		exit(0);
 	}
 
 	printf("\nEnter the data value for the data:\t");
-	scanf("%d", &temp->info);
-	temp->next = NULL;
-	if (start == NULL)
-	{
+	scanf("%d", & temp -> info);
+	temp -> next = NULL;
+	if (start == NULL) {
 		start = temp;
-	}
-	else
-	{
+	} else {
 		alamat = start;
-		while (alamat->next != NULL)
-		{
-			alamat = alamat->next;
+		while (alamat -> next != NULL) {
+			alamat = alamat -> next;
 		}
 
-		alamat->next = temp;
+		alamat -> next = temp;
 	}
 }
 
-void display()
-{
+void display() {
 	struct data * alamat;
-	if (start == NULL)
-	{
+	if (start == NULL) {
 		printf("\nList is empty:\n");
 		return;
-	}
-	else
-	{
+	} else {
 		alamat = start;
 		printf("\nThe List elements are:\n");
-		while (alamat != NULL)
-		{
-			printf("| %d |\t", alamat->info);
-			alamat = alamat->next;
+		while (alamat != NULL) {
+			printf("| %d |\t", alamat -> info);
+			alamat = alamat -> next;
 		}
 	}
+
 	system("\n\n pause");
 }
 
-void insert_begin()
-{
+void insert_begin() {
 	struct data * temp;
-	temp = (struct data *) malloc(sizeof(struct data));
-	if (temp == NULL)
-	{
+	temp = (struct data * ) malloc(sizeof(struct data));
+	if (temp == NULL) {
 		printf("\nOut of Memory Space:\n");
 		return;
 	}
 
 	printf("\nEnter the data value for the data:\t");
-	scanf("%d", &temp->info);
-	temp->next = NULL;
-	if (start == NULL)
-	{
+	scanf("%d", & temp -> info);
+	temp -> next = NULL;
+	if (start == NULL) {
 		start = temp;
-	}
-	else
-	{
-		temp->next = start;
+	} else {
+		temp -> next = start;
 		start = temp;
 	}
 }
 
-void insert_end()
-{
-	struct data *temp, *alamat;
-	temp = (struct data *) malloc(sizeof(struct data));
-	if (temp == NULL)
-	{
+void insert_end() {
+	struct data * temp, * alamat;
+	temp = (struct data * ) malloc(sizeof(struct data));
+	if (temp == NULL) {
 		printf("\nOut of Memory Space:\n");
 		return;
 	}
 
 	printf("\nEnter the data value for the data:\t");
-	scanf("%d", &temp->info);
-	temp->next = NULL;
-	if (start == NULL)
-	{
+	scanf("%d", & temp -> info);
+	temp -> next = NULL;
+	if (start == NULL) {
 		start = temp;
-	}
-	else
-	{
+	} else {
 		alamat = start;
-		while (alamat->next != NULL)
-		{
-			alamat = alamat->next;
+		while (alamat -> next != NULL) {
+			alamat = alamat -> next;
 		}
 
-		alamat->next = temp;
+		alamat -> next = temp;
 	}
 }
 
-void insert_pos()
-{
-	struct data *alamat, *temp;
+void insert_pos() {
+	struct data * alamat, * temp;
 	int i, pos;
-	temp = (struct data *) malloc(sizeof(struct data));
-	if (temp == NULL)
-	{
+	temp = (struct data * ) malloc(sizeof(struct data));
+	if (temp == NULL) {
 		printf("\nOut of Memory Space:\n");
 		return;
 	}
 
 	printf("\nEnter the position for the new data to be inserted:\t");
-	scanf("%d", &pos);
+	scanf("%d", & pos);
 	printf("\nEnter the data value of the data:\t");
-	scanf("%d", &temp->info);
+	scanf("%d", & temp -> info);
 
-	temp->next = NULL;
-	if (pos == 0)
-	{
-		temp->next = start;
+	temp -> next = NULL;
+	if (pos == 0) {
+		temp -> next = start;
 		start = temp;
-	}
-	else
-	{
-		for (i = 0, alamat = start; i < pos - 1; i++)
-		{
-			alamat = alamat->next;
-			if (alamat == NULL)
-			{
+	} else {
+		for (i = 0, alamat = start; i < pos - 1; i++) {
+			alamat = alamat -> next;
+			if (alamat == NULL) {
 				printf("\nPosition not found:[Handle with care]\n");
 				return;
 			}
 		}
 
-		temp->next = alamat->next;
-		alamat->next = temp;
+		temp -> next = alamat -> next;
+		alamat -> next = temp;
 	}
 }
 
-void delete_begin()
-{
+void delete_begin() {
 	struct data * alamat;
-	if (alamat == NULL)
-	{
+	if (alamat == NULL) {
 		printf("\nList is Empty:\n");
 		return;
-	}
-	else
-	{
+	} else {
 		alamat = start;
-		start = start->next;
-		printf("\nThe deleted element is :%d\t", alamat->info);
+		start = start -> next;
+		printf("\nThe deleted element is :%d\t", alamat -> info);
 		free(alamat);
 	}
 }
 
-void delete_end()
-{
-	struct data *temp, *alamat;
-	if (start == NULL)
-	{
+void delete_end() {
+	struct data * temp, * alamat;
+	if (start == NULL) {
 		printf("\nList is Empty:");
 		exit(0);
-	}
-	else if (start->next == NULL)
-	{
+	} else if (start -> next == NULL) {
 		alamat = start;
 		start = NULL;
-		printf("\nThe deleted element is:%d\t", alamat->info);
+		printf("\nThe deleted element is:%d\t", alamat -> info);
 		free(alamat);
-	}
-	else
-	{
+	} else {
 		alamat = start;
-		while (alamat->next != NULL)
-		{
+		while (alamat -> next != NULL) {
 			temp = alamat;
-			alamat = alamat->next;
+			alamat = alamat -> next;
 		}
 
-		temp->next = NULL;
-		printf("\nThe deleted element is:%d\t", alamat->info);
+		temp -> next = NULL;
+		printf("\nThe deleted element is:%d\t", alamat -> info);
 		free(alamat);
 	}
 }
 
-void delete_pos()
-{
+void delete_pos() {
 	int i, pos;
-	struct data *temp, *alamat;
-	if (start == NULL)
-	{
+	struct data * temp, * alamat;
+	if (start == NULL) {
 		printf("\nThe List is Empty:\n");
 		exit(0);
-	}
-	else
-	{
+	} else {
 		printf("\nEnter the position of the data to be deleted:\t");
-		scanf("%d", &pos);
-		if (pos == 0)
-		{
+		scanf("%d", & pos);
+		if (pos == 0) {
 			alamat = start;
-			start = start->next;
-			printf("\nThe deleted element is:%d\t", alamat->info);
+			start = start -> next;
+			printf("\nThe deleted element is:%d\t", alamat -> info);
 			free(alamat);
-		}
-		else
-		{
+		} else {
 			alamat = start;
-			for (i = 0; i < pos; i++)
-			{
+			for (i = 0; i < pos; i++) {
 				temp = alamat;
-				alamat = alamat->next;
-				if (alamat == NULL)
-				{
+				alamat = alamat -> next;
+				if (alamat == NULL) {
 					printf("\nPosition not Found:\n");
 					return;
 				}
 			}
 
-			temp->next = alamat->next;
-			printf("\nThe deleted element is:%d\t", alamat->info);
+			temp -> next = alamat -> next;
+			printf("\nThe deleted element is:%d\t", alamat -> info);
 			free(alamat);
 		}
 	}
 }
 
-void main(){
+void main() {
 	menu_utama();
 }
