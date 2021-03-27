@@ -1,0 +1,168 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct data{
+	int nilai;
+	struct data *next;
+}*head, *current, *node, *temp;
+
+int i, a;
+
+void menu_utama(){
+	int pilih;
+	
+	menu:
+	system("cls");
+	printf(" ----------------------------------------\n");
+	printf(" ================= MENU =================\n");
+	printf(" ----------------------------------------\n\n");
+	printf(" 1. Read Data\n");
+	printf(" 2. Insert Data\n");
+	printf(" 3. Delete Data\n");
+	printf(" 4. Update Data\n");
+	printf(" 5. Keluar\n");
+	printf(" Silakan masukkan pilihan anda : ");
+	scanf("%i", &pilih);
+	switch (pilih){
+		case 1: {
+			menu1();
+			//menu 1 berisi read saja
+		}
+		case 2: {
+			menu2();
+			//menu 2 berisi Input Head dan Input Tail
+		}
+		case 3: {
+			menu3();
+			printf(" "); system("pause"); system("cls"); goto menu;
+			//menu 3 berisi Delete Head dan Delete Tails (Delete "angka" opsional)
+		}
+		case 4: {
+			menu4();
+			printf(" "); system("pause"); system("cls"); goto menu;
+			//menu 4 berisi Update data menggunakan perulangan sampai scanf == "angka"
+		}
+		case 5: {
+			menu5();
+			//keluar program
+		}
+	}
+}
+
+void menu1(){
+	int nomor;
+	system("cls");
+	printf(" ----------------------------------------\n");
+	printf(" ========== MENU 1 - Read Data ==========\n");
+	printf(" ----------------------------------------\n\n");
+	
+	temp = head;
+	while(temp!=NULL){
+		printf(" Data ke %i\t%i\n", nomor+1, temp->nilai);
+		temp = temp->next;
+		nomor++;
+		if(temp==NULL){
+			printf(" "); system("pause"); system("cls"); menu_utama();
+		}
+	}
+}
+
+void menu2(){
+	int pilih;
+	
+	system("cls");
+	printf(" ----------------------------------------\n");
+	printf(" ========= MENU 2 - Insert Data =========\n");
+	printf(" ----------------------------------------\n\n");
+	printf(" 1. Insert Head\n");
+	printf(" 2. Insert Tail\n");
+	printf(" 3. Menu Utama\n");
+	printf(" Silakan masukkan pilihan anda : ");
+	scanf("%i", &pilih);
+	if (pilih == 1){
+			//inserthead
+			printf(" Masukkan data ke Head : ");
+        	scanf("%i", &a);
+        	inserthead(a);
+    		printf(" "); system("pause"); system("cls"); menu_utama();
+		}
+	else if (pilih == 2){
+			//inserttail
+        	printf(" Masukkan data ke Tail : ");
+        	scanf("%i", &a);
+        	inserttail(a);
+    		printf(" "); system("pause"); system("cls"); menu_utama();
+		}
+	}
+
+void menu3(){
+	int pilih;
+	
+	system("cls");
+	printf(" ----------------------------------------\n");
+	printf(" ========= MENU 3 - Delete Data =========\n");
+	printf(" ----------------------------------------\n\n");
+	printf(" 1. Delete Head\n");
+	printf(" 2. Delete Tail\n");
+	printf(" 3. Menu Utama\n");
+	printf(" Silakan masukkan pilihan anda : ");
+	scanf("%i", &pilih);
+	switch (pilih){
+		case 1: {
+			//deletehead();
+		}
+		case 2: {
+			//deletetail();
+		}
+	}
+}
+
+void menu4(){
+	int diubah;
+
+	system("cls");
+	printf(" ----------------------------------------\n");
+	printf(" ========= MENU 4 - Update Data =========\n");
+	printf(" ----------------------------------------\n\n");
+	printf(" Silakan masukkan angka yang akan diubah : ");
+	scanf("%i", &diubah);
+}
+
+void menu5(){
+	printf("\n Byebye!\n ");
+	printf("Ivan Andika Surya, 2021\n");
+	exit(EXIT_SUCCESS);
+}
+
+//====================================================================================== ALGORITMA =======
+void inserthead(int angka){
+    node = (struct data *)malloc(sizeof(struct data));
+    node->nilai = angka;
+
+    if(head==NULL){
+        head = node;
+        current = node;
+    }else{
+        node->next = head;
+        head = node;
+    }
+    current->next = NULL;
+}
+
+void inserttail(int angka){
+	node = (struct data *)malloc(sizeof(struct data));
+    node->nilai = angka;
+
+    if(head==NULL){
+        head = node;
+        current = node;
+    }else{
+        current->next = node;
+        current = node;
+    }
+    current->next = NULL;
+}
+
+void main(){
+	menu_utama();
+}
