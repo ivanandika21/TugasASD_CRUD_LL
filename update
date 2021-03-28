@@ -323,7 +323,7 @@ void updateposisi(){
 		printf("\n ERROR: Memory tidak cukup!\n");
 	}
 	
-	printf("\n Pilih nomor data yang akan diisi : ");
+	printf("\n Pilih nomor data yang akan diupdate : ");
 	scanf("%i", &pos);
 	printf("\n Masukkan data yang akan diinput : ");
 	scanf("%i", &node->nilai);
@@ -332,10 +332,14 @@ void updateposisi(){
 	if (pos == 1) {
 		node->next = start;
 		start = node;
-		/*temp = start;
-		start = start->next;
-		printf("\n\n Data yang dihapus adalah : %i\n", temp->nilai);
-		free(temp);*/
+		temp = start;
+		for (i = 0; i < pos; i++) {
+			node = temp;
+			temp = temp->next;
+		}
+		node->next = temp->next;
+		printf("\n\n Data yang diupdate adalah : %i menjadi %i\n", temp->nilai, start->nilai);
+		free(temp);
 	} else {
 		for (i = 1, temp = start; i < pos-1; i++) {
 			temp = temp->next;
@@ -353,7 +357,7 @@ void updateposisi(){
 			temp = temp->next;
 		}
 		node->next = temp->next;
-		printf("\n\n Data yang dihapus adalah : %i\n", temp->nilai);
+		printf("\n\n Data yang diupdate adalah : %i menjadi %i\n", temp->nilai, node->nilai);
 		free(temp);
 	}
 }
