@@ -24,33 +24,33 @@ int menu_utama() {
 		printf(" Silakan masukkan pilihan anda : ");
 		scanf("%i", & pilih);
 		switch (pilih) {
-		case 1: {
-			menu1(); //menu 1 berisi read saja
-			printf(" ");
-			system("pause");
-			menu_utama();
-		}
-		case 2: {
-			menu2(); //menu 2 berisi Input Head dan Input Tail
-			printf(" ");
-			system("pause");
-			menu_utama();
-		}
-		case 3: {
-			menu3(); //menu 3 berisi Delete Head dan Delete Tails (Delete "angka" opsional)
-			printf(" ");
-			system("pause");
-			menu_utama();
-		}
-		case 4: {
-			menu4(); //menu 4 berisi Update data menggunakan perulangan sampai scanf == "angka"
-			printf(" ");
-			system("pause");
-			menu_utama();
-		}
-		case 5: {
-			menu5(); //keluar program
-		}
+			case 1: {
+				menu1(); //menu 1 berisi read saja
+				printf(" ");
+				system("pause");
+				menu_utama();
+			}
+			case 2: {
+				menu2(); //menu 2 berisi Input Head dan Input Tail
+				printf(" ");
+				system("pause");
+				menu_utama();
+			}
+			case 3: {
+				menu3(); //menu 3 berisi Delete Head dan Delete Tails (Delete "angka" opsional)
+				printf(" ");
+				system("pause");
+				menu_utama();
+			}
+			case 4: {
+				menu4(); //menu 4 berisi Update data menggunakan perulangan sampai scanf == "angka"
+				printf(" ");
+				system("pause");
+				menu_utama();
+			}
+			case 5: {
+				menu5(); //keluar program
+			}
 		}
 	}
 }
@@ -142,12 +142,6 @@ void menu4() {
 	} else if (pilih == 5) {
 		menu_utama();
 	}
-
-	/*int ubah, jadi;
-	printf(" Pilih data yang akan diubah : ");
-	scanf("%i", &ubah);
-	printf(" Pilih data yang baru : ");
-	scanf("%i", &jadi);*/
 }
 
 void menu5() {
@@ -249,11 +243,66 @@ void deletetail() {
 }
 
 void updatehead() {
+	struct data *temp, *node, *tempsebelum;
+	if (temp == NULL) {
+		printf(" Maaf, Anda belum memasukkan data.\n");
+	} else {
+		temp = start;
+		start = start->next;
+		tempsebelum = temp->nilai;
+		free(temp);
+	}
+	
+	node = (struct data *) malloc(sizeof(struct data));
 
+	printf("\n Masukkan data yang akan diinput : ");
+	scanf("%i", & node->nilai);
+	node->next = NULL;
+	if (start == NULL) {
+		start = node;
+	} else {
+		node->next = start;
+		start = node;
+	}
+	printf("\n Data yang diupdate adalah %i menjadi %i\n", tempsebelum, node->nilai);
 }
 
 void updatetail() {
+	struct data *node, *temp, *tempsebelum;
+	if (start == NULL) {
+		printf(" Maaf, Anda belum memasukkan data.\n");
+		menu_utama();
+	} else if (start->next == NULL) {
+		temp = start;
+		start = NULL;
+		tempsebelum = temp->nilai;
+		free(temp);
+	} else {
+		temp = start;
+		while (temp->next != NULL) {
+			node = temp;
+			temp = temp->next;
+		}
+		node->next = NULL;
+		tempsebelum = temp->nilai;
+		free(temp);
+	}
+	
+	node = (struct data *) malloc(sizeof(struct data));
 
+	printf("\n Masukkan data yang akan diinput : ");
+	scanf("%i", & node->nilai);
+	node->next = NULL;
+	if (start == NULL) {
+		start = node;
+	} else {
+		temp = start;
+		while (temp->next != NULL) {
+			temp = temp->next;
+		}
+		temp->next = node;
+	}
+	printf("\n Data yang diupdate adalah %i menjadi %i\n", tempsebelum, node->nilai);
 }
 
 //==================================================================================== NILAI ======
