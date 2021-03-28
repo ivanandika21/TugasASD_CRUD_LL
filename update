@@ -1,5 +1,5 @@
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 struct data {
 	int nilai;
@@ -60,28 +60,11 @@ int menu_utama() {
 }
 
 void menu1() {
-	int nomor = 0;
-
 	system("cls");
 	printf(" ----------------------------------------\n");
 	printf(" ========== MENU 1 - Read Data ==========\n");
 	printf(" ----------------------------------------\n\n");
-	struct data *temp;
-	if (start == NULL) {
-		printf(" Maaf, Anda belum memasukkan data.\n");
-	} else {
-		temp = start;
-		printf(" Linked List yang telah dibuat adalah :\n");
-		printf(" --------------------\n");
-		printf("  No.\t Isi\n");
-		printf(" --------------------\n");
-		while (temp != NULL) {
-			printf("  %i\t %i	\n", nomor + 1, temp->nilai);
-			temp = temp->next;
-			nomor++;
-		}
-		printf(" --------------------\n");
-	}
+	listdoang();
 }
 
 void menu2() {
@@ -156,8 +139,8 @@ void menu5() {
 }
 
 void listdoang(){
-    struct data *temp;
     int nomor = 0;
+    struct data *temp;
     
 	if (start == NULL) {
 		printf(" Maaf, Anda belum memasukkan data.\n");
@@ -338,7 +321,7 @@ void updateposisi(){
 			temp = temp->next;
 		}
 		node->next = temp->next;
-		printf("\n\n Data yang diupdate adalah : %i menjadi %i\n", temp->nilai, start->nilai);
+		printf("\n Data yang diupdate adalah %i menjadi %i\n", temp->nilai, start->nilai);
 		free(temp);
 	} else {
 		for (i = 1, temp = start; i < pos-1; i++) {
@@ -357,7 +340,7 @@ void updateposisi(){
 			temp = temp->next;
 		}
 		node->next = temp->next;
-		printf("\n\n Data yang diupdate adalah : %i menjadi %i\n", temp->nilai, node->nilai);
+		printf("\n Data yang diupdate adalah %i menjadi %i\n", temp->nilai, node->nilai);
 		free(temp);
 	}
 }
