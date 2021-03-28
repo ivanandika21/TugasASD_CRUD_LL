@@ -298,7 +298,7 @@ void deletenilai(){
 }
 
 void updatenilai(){
-	struct data *temp, *node;
+	struct data *temp, *node, *tempangka;
 	int i, angka;
 	node = (struct data *) malloc(sizeof(struct data));
 	if (node == NULL) {
@@ -309,7 +309,7 @@ void updatenilai(){
 	scanf("%i", &angka);
 	printf("\n Masukkan data yang akan diinput : ");
 	scanf("%i", &node->nilai);
-
+	tempangka = node->nilai;
 	node->next = NULL;
 	if (angka == start->nilai) {
 		node->next = start;
@@ -361,7 +361,7 @@ void updatenilai(){
 			}
 			keluarhapus:
 			node->next = temp->next;
-			printf("\n Data yang diupdate adalah %i menjadi %i\n", temp->nilai, node->nilai);
+			printf("\n Data yang diupdate adalah %i menjadi %i\n", temp->nilai, tempangka); //belum beres
 			free(temp);
 			
 	}
