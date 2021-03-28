@@ -22,35 +22,35 @@ int menu_utama() {
 		printf(" 4. Update Data\n");
 		printf(" 5. Keluar\n");
 		printf(" Silakan masukkan pilihan anda : ");
-		scanf("%i", &pilih);
+		scanf("%i", & pilih);
 		switch (pilih) {
-			case 1: {
-				menu1(); //menu 1 berisi read saja
-				printf(" ");
-				system("pause");
-				menu_utama();
-			}
-			case 2: {
-				menu2(); //menu 2 berisi Input Head dan Input Tail
-				printf(" ");
-				system("pause");
-				menu_utama();
-			}
-			case 3: {
-				menu3(); //menu 3 berisi Delete Head dan Delete Tails (Delete "angka" opsional)
-				printf(" ");
-				system("pause");
-				menu_utama();
-			}
-			case 4: {
-				menu4(); //menu 4 berisi Update data menggunakan perulangan sampai scanf == "angka"
-				printf(" ");
-				system("pause");
-				menu_utama();
-			}
-			case 5: {
-				menu5(); //keluar program
-			}
+		case 1: {
+			menu1(); //menu 1 berisi read saja
+			printf(" ");
+			system("pause");
+			menu_utama();
+		}
+		case 2: {
+			menu2(); //menu 2 berisi Input Head dan Input Tail
+			printf(" ");
+			system("pause");
+			menu_utama();
+		}
+		case 3: {
+			menu3(); //menu 3 berisi Delete Head dan Delete Tails (Delete "angka" opsional)
+			printf(" ");
+			system("pause");
+			menu_utama();
+		}
+		case 4: {
+			menu4(); //menu 4 berisi Update data menggunakan perulangan sampai scanf == "angka"
+			printf(" ");
+			system("pause");
+			menu_utama();
+		}
+		case 5: {
+			menu5(); //keluar program
+		}
 		}
 	}
 }
@@ -73,10 +73,10 @@ void menu2() {
 	listdoang();
 	printf(" 1. Insert Head\n");
 	printf(" 2. Insert Tail\n");
-    printf(" 3. Insert Posisi\n");
+	printf(" 3. Insert Posisi\n");
 	printf(" 4. Menu Utama\n");
 	printf(" Silakan masukkan pilihan anda : ");
-	scanf("%i", &pilih);
+	scanf("%i", & pilih);
 	if (pilih == 1) {
 		inserthead();
 	} else if (pilih == 2) {
@@ -102,7 +102,7 @@ void menu3() {
 	printf(" 4. Delete Nilai\n");
 	printf(" 5. Menu Utama\n");
 	printf(" Silakan masukkan pilihan anda : ");
-	scanf("%i", &pilih);
+	scanf("%i", & pilih);
 	if (pilih == 1) {
 		deletehead();
 	} else if (pilih == 2) {
@@ -118,7 +118,7 @@ void menu3() {
 
 void menu4() {
 	int pilih;
-	
+
 	system("cls");
 	printf(" ----------------------------------------\n");
 	printf(" ========= MENU 4 - Update Data =========\n");
@@ -130,7 +130,7 @@ void menu4() {
 	printf(" 4. Update Nilai\n");
 	printf(" 5. Menu Utama\n");
 	printf(" Silakan masukkan pilihan anda : ");
-	scanf("%i", &pilih);
+	scanf("%i", & pilih);
 	if (pilih == 1) {
 		updatehead();
 	} else if (pilih == 2) {
@@ -142,7 +142,7 @@ void menu4() {
 	} else if (pilih == 5) {
 		menu_utama();
 	}
-	
+
 	/*int ubah, jadi;
 	printf(" Pilih data yang akan diubah : ");
 	scanf("%i", &ubah);
@@ -156,10 +156,10 @@ void menu5() {
 	exit(EXIT_SUCCESS);
 }
 
-void listdoang(){
-    int nomor = 0;
-    struct data *temp;
-    
+void listdoang() {
+	int nomor = 0;
+	struct data *temp;
+
 	if (start == NULL) {
 		printf(" Maaf, Anda belum memasukkan data.\n");
 	} else {
@@ -182,12 +182,10 @@ void listdoang(){
 void inserthead() {
 	struct data *node;
 	node = (struct data *) malloc(sizeof(struct data));
-	if (node == NULL) {
-		printf("\n ERROR: Memory tidak cukup!\n");
-	}
+	//preventerror
 
 	printf("\n Masukkan data yang akan diinput : ");
-	scanf("%i", &node->nilai);
+	scanf("%i", & node->nilai);
 	node->next = NULL;
 	if (start == NULL) {
 		start = node;
@@ -200,12 +198,10 @@ void inserthead() {
 void inserttail() {
 	struct data *node, *temp;
 	node = (struct data *) malloc(sizeof(struct data));
-	if (node == NULL) {
-		printf("\n ERROR: Memory tidak cukup!\n");
-	}
+	//preventerror
 
 	printf("\n Masukkan data yang akan diinput : ");
-	scanf("%i", &node->nilai);
+	scanf("%i", & node->nilai);
 	node->next = NULL;
 	if (start == NULL) {
 		start = node;
@@ -252,24 +248,24 @@ void deletetail() {
 	}
 }
 
-void updatehead(){
-	
+void updatehead() {
+
 }
 
-void updatetail(){
-	
+void updatetail() {
+
 }
 
 //==================================================================================== NILAI ======
 
-void deletenilai(){
+void deletenilai() {
 	int i, angka;
 	struct data *node, *temp;
 	if (start == NULL) {
 		printf("\n ERROR: Memory tidak cukup!\n");
 	} else {
 		printf("\n Pilih isi data yang akan dihapus : ");
-		scanf("%i", &angka);
+		scanf("%i", & angka);
 		if (angka == start->nilai) {
 			temp = start;
 			start = start->next;
@@ -280,7 +276,7 @@ void deletenilai(){
 			for (i = 1; i < 9999; i++) {
 				node = temp;
 				temp = temp->next;
-				if(angka == temp->nilai){
+				if (angka == temp->nilai) {
 					goto keluar;
 				}
 				if (temp->next == NULL) {
@@ -290,25 +286,23 @@ void deletenilai(){
 				}
 			}
 			keluar:
-			node->next = temp->next;
+				node->next = temp->next;
 			printf("\n Data yang dihapus adalah : %i\n", temp->nilai);
 			free(temp);
 		}
 	}
 }
 
-void updatenilai(){
+void updatenilai() {
 	struct data *temp, *node, *tempangka;
 	int i, angka;
 	node = (struct data *) malloc(sizeof(struct data));
-	if (node == NULL) {
-		printf("\n ERROR: Memory tidak cukup!\n");
-	}
-	
+	//preventerror
+
 	printf("\n Pilih isi data yang akan diupdate : ");
-	scanf("%i", &angka);
+	scanf("%i", & angka);
 	printf("\n Masukkan data yang akan diinput : ");
-	scanf("%i", &node->nilai);
+	scanf("%i", & node->nilai);
 	tempangka = node->nilai;
 	node->next = NULL;
 	if (angka == start->nilai) {
@@ -318,22 +312,22 @@ void updatenilai(){
 		for (i = 0; i < 9999; i++) {
 			node = temp;
 			temp = temp->next;
-			if(angka == temp->nilai){
+			if (angka == temp->nilai) {
 				goto keluarstart;
 			}
 		}
 		keluarstart:
-		node->next = temp->next;
+			node->next = temp->next;
 		printf("\n Data yang diupdate adalah %i menjadi %i\n", temp->nilai, start->nilai);
 		free(temp);
 	} else {
 		if (angka == start->nilai) {
-		node->next = start;
-		start = node;
+			node->next = start;
+			start = node;
 		} else {
 			for (i = 1, temp = start; i < 9999; i++) {
 				temp = temp->next;
-				if(angka == temp->nilai){
+				if (angka == temp->nilai) {
 					goto keluarinsert;
 				}
 				if (temp->next == NULL) {
@@ -343,27 +337,27 @@ void updatenilai(){
 				}
 			}
 			keluarinsert:
-			node->next = temp->next;
+				node->next = temp->next;
 			temp->next = node;
 		}
 		temp = start;
-			for (i = 1; i < 9999; i++) {
-				node = temp;
-				temp = temp->next;
-				if(angka == temp->nilai){
-					goto keluarhapus;
-				}
-				if (temp->next == NULL) {
-					printf("\n Maaf, anda memasukkan nilai yang salah.\n ");
-					system("pause");
-					menu_utama();
-				}
+		for (i = 1; i < 9999; i++) {
+			node = temp;
+			temp = temp->next;
+			if (angka == temp->nilai) {
+				goto keluarhapus;
 			}
-			keluarhapus:
+			if (temp->next == NULL) {
+				printf("\n Maaf, anda memasukkan nilai yang salah.\n ");
+				system("pause");
+				menu_utama();
+			}
+		}
+		keluarhapus:
 			node->next = temp->next;
-			printf("\n Data yang diupdate adalah %i menjadi %i\n", temp->nilai, tempangka);
-			free(temp);
-			
+		printf("\n Data yang diupdate adalah %i menjadi %i\n", temp->nilai, tempangka);
+		free(temp);
+
 	}
 }
 
@@ -373,21 +367,19 @@ void insertposisi() {
 	struct data *temp, *node;
 	int i, pos;
 	node = (struct data *) malloc(sizeof(struct data));
-	if (node == NULL) {
-		printf("\n ERROR: Memory tidak cukup!\n");
-	}
-	
+	//preventerror
+
 	printf("\n Pilih nomor data yang akan diisi : ");
-	scanf("%i", &pos);
+	scanf("%i", & pos);
 	printf("\n Masukkan data yang akan diinput : ");
-	scanf("%i", &node->nilai);
+	scanf("%i", & node->nilai);
 
 	node->next = NULL;
 	if (pos == 1) {
 		node->next = start;
 		start = node;
 	} else {
-		for (i = 1, temp = start; i < pos-1; i++) {
+		for (i = 1, temp = start; i < pos - 1; i++) {
 			temp = temp->next;
 			if (temp == NULL) {
 				printf("\n Maaf, anda memasukkan posisi yang salah.\n ");
@@ -407,7 +399,7 @@ void deleteposisi() {
 		printf("\n ERROR: Memory tidak cukup!\n");
 	} else {
 		printf("\n Pilih nomor data yang akan dihapus : ");
-		scanf("%i", &pos);
+		scanf("%i", & pos);
 		if (pos == 1) {
 			temp = start;
 			start = start->next;
@@ -431,18 +423,16 @@ void deleteposisi() {
 	}
 }
 
-void updateposisi(){
+void updateposisi() {
 	struct data *temp, *node;
 	int i, pos;
 	node = (struct data *) malloc(sizeof(struct data));
-	if (node == NULL) {
-		printf("\n ERROR: Memory tidak cukup!\n");
-	}
-	
+	//preventerror
+
 	printf("\n Pilih nomor data yang akan diupdate : ");
-	scanf("%i", &pos);
+	scanf("%i", & pos);
 	printf("\n Masukkan data yang akan diinput : ");
-	scanf("%i", &node->nilai);
+	scanf("%i", & node->nilai);
 
 	node->next = NULL;
 	if (pos == 1) {
@@ -457,7 +447,7 @@ void updateposisi(){
 		printf("\n Data yang diupdate adalah %i menjadi %i\n", temp->nilai, start->nilai);
 		free(temp);
 	} else {
-		for (i = 1, temp = start; i < pos-1; i++) {
+		for (i = 1, temp = start; i < pos - 1; i++) {
 			temp = temp->next;
 			if (temp == NULL) {
 				printf("\n Maaf, anda memasukkan posisi yang salah.\n ");
