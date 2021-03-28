@@ -361,7 +361,7 @@ void updatenilai(){
 			}
 			keluarhapus:
 			node->next = temp->next;
-			printf("\n Data yang diupdate adalah %i menjadi %i\n", temp->nilai, tempangka); //belum beres
+			printf("\n Data yang diupdate adalah %i menjadi %i\n", temp->nilai, tempangka);
 			free(temp);
 			
 	}
