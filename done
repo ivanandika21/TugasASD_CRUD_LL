@@ -352,7 +352,6 @@ void deletenilai() {
 //====================================================== ALGORITMA UPDATE ====
 void updatehead() {
 	struct data *temp, *node, *tempsebelum;
-	node = (struct data *) malloc(sizeof(struct data));
 
 	if (temp == NULL) {
 		printf(" Maaf, Anda belum memasukkan data.\n");
@@ -363,6 +362,9 @@ void updatehead() {
 		tempsebelum = temp->nilai;
 		free(temp);
 	}
+	
+	node = (struct data *) malloc(sizeof(struct data));
+	
 	printf("\n Masukkan data yang akan diinput : ");
 	scanf("%i", & node->nilai);
 	node->next = NULL;
@@ -377,7 +379,6 @@ void updatehead() {
 
 void updatetail() {
 	struct data *node, *temp, *tempsebelum;
-	node = (struct data *) malloc(sizeof(struct data));
 
 	if (start == NULL) {
 		printf(" Maaf, Anda belum memasukkan data.\n");
@@ -398,6 +399,8 @@ void updatetail() {
 		free(temp);
 	}
 
+	node = (struct data *) malloc(sizeof(struct data));
+	
 	printf("\n Masukkan data yang akan diinput : ");
 	scanf("%i", & node->nilai);
 	node->next = NULL;
