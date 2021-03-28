@@ -117,12 +117,31 @@ void menu3() {
 }
 
 void menu4() {
+	int pilih;
+	
 	system("cls");
 	printf(" ----------------------------------------\n");
 	printf(" ========= MENU 4 - Update Data =========\n");
 	printf(" ----------------------------------------\n\n");
 	listdoang();
-	updateposisi();
+	printf(" 1. Update Head\n");
+	printf(" 2. Update Tail\n");
+	printf(" 3. Update Posisi\n");
+	printf(" 4. Update Nilai\n");
+	printf(" 5. Menu Utama\n");
+	printf(" Silakan masukkan pilihan anda : ");
+	scanf("%i", &pilih);
+	if (pilih == 1) {
+		updatehead();
+	} else if (pilih == 2) {
+		updatetail();
+	} else if (pilih == 3) {
+		updateposisi();
+	} else if (pilih == 4) {
+		updatenilai();
+	} else if (pilih == 5) {
+		menu_utama();
+	}
 	
 	/*int ubah, jadi;
 	printf(" Pilih data yang akan diubah : ");
@@ -233,6 +252,16 @@ void deletetail() {
 	}
 }
 
+void updatehead(){
+	
+}
+
+void updatetail(){
+	
+}
+
+//==================================================================================== NILAI ======
+
 void deletenilai(){
 	int i, angka;
 	struct data *node, *temp;
@@ -248,7 +277,7 @@ void deletenilai(){
 			free(temp);
 		} else {
 			temp = start;
-			for (i = 1; i < 999; i++) {
+			for (i = 1; i < 9999; i++) {
 				node = temp;
 				temp = temp->next;
 				if(angka == temp->nilai){
@@ -269,7 +298,73 @@ void deletenilai(){
 }
 
 void updatenilai(){
+	struct data *temp, *node;
+	int i, angka;
+	node = (struct data *) malloc(sizeof(struct data));
+	if (node == NULL) {
+		printf("\n ERROR: Memory tidak cukup!\n");
+	}
 	
+	printf("\n Pilih isi data yang akan diupdate : ");
+	scanf("%i", &angka);
+	printf("\n Masukkan data yang akan diinput : ");
+	scanf("%i", &node->nilai);
+
+	node->next = NULL;
+	if (angka == start->nilai) {
+		node->next = start;
+		start = node;
+		temp = start;
+		for (i = 0; i < 9999; i++) {
+			node = temp;
+			temp = temp->next;
+			if(angka == temp->nilai){
+				goto keluarstart;
+			}
+		}
+		keluarstart:
+		node->next = temp->next;
+		printf("\n Data yang diupdate adalah %i menjadi %i\n", temp->nilai, start->nilai);
+		free(temp);
+	} else {
+		if (angka == start->nilai) {
+		node->next = start;
+		start = node;
+		} else {
+			for (i = 1, temp = start; i < 9999; i++) {
+				temp = temp->next;
+				if(angka == temp->nilai){
+					goto keluarinsert;
+				}
+				if (temp->next == NULL) {
+					printf("\n Maaf, anda memasukkan posisi yang salah.\n ");
+					system("pause");
+					menu_utama();
+				}
+			}
+			keluarinsert:
+			node->next = temp->next;
+			temp->next = node;
+		}
+		temp = start;
+			for (i = 1; i < 9999; i++) {
+				node = temp;
+				temp = temp->next;
+				if(angka == temp->nilai){
+					goto keluarhapus;
+				}
+				if (temp->next == NULL) {
+					printf("\n Maaf, anda memasukkan nilai yang salah.\n ");
+					system("pause");
+					menu_utama();
+				}
+			}
+			keluarhapus:
+			node->next = temp->next;
+			printf("\n Data yang diupdate adalah %i menjadi %i\n", temp->nilai, node->nilai);
+			free(temp);
+			
+	}
 }
 
 //==================================================================================== POSISI ======
