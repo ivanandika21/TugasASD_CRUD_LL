@@ -1,0 +1,363 @@
+#include <stdlib.h>
+#include <stdio.h>
+
+struct data {
+	int nilai;
+	struct data *next;
+};
+
+struct data *start = NULL;
+
+int menu_utama() {
+	int pilih;
+
+	while (1) {
+		system("cls");
+		printf(" ----------------------------------------\n");
+		printf(" ================= MENU =================\n");
+		printf(" ----------------------------------------\n\n");
+		printf(" 1. Read Data\n");
+		printf(" 2. Insert Data\n");
+		printf(" 3. Delete Data\n");
+		printf(" 4. Update Data\n");
+		printf(" 5. Keluar\n");
+		printf(" Silakan masukkan pilihan anda : ");
+		scanf("%i", &pilih);
+		switch (pilih) {
+		case 1: {
+			menu1(); //menu 1 berisi read saja
+			printf(" ");
+			system("pause");
+			menu_utama();
+		}
+
+		case 2: {
+			menu2(); //menu 2 berisi Input Head dan Input Tail
+			printf(" ");
+			system("pause");
+			menu_utama();
+		}
+
+		case 3: {
+			menu3(); //menu 3 berisi Delete Head dan Delete Tails (Delete "angka" opsional)
+			printf(" ");
+			system("pause");
+			menu_utama();
+		}
+
+		case 4: {
+			menu4(); //menu 4 berisi Update data menggunakan perulangan sampai scanf == "angka"
+			printf(" ");
+			system("pause");
+			menu_utama();
+		}
+
+		case 5: {
+			menu5(); //keluar program
+		}
+		}
+	}
+}
+
+void menu1() {
+	int nomor = 0;
+
+	system("cls");
+	printf(" ----------------------------------------\n");
+	printf(" ========== MENU 1 - Read Data ==========\n");
+	printf(" ----------------------------------------\n\n");
+	struct data *temp;
+	if (start == NULL) {
+		printf(" Maaf, Anda belum memasukkan data.\n");
+	} else {
+		temp = start;
+		printf(" Linked List yang telah dibuat adalah :\n");
+		printf(" --------------------\n");
+		printf("  No.\t Isi\n");
+		printf(" --------------------\n");
+		while (temp != NULL) {
+			printf("  %i\t %i	\n", nomor + 1, temp->nilai);
+			temp = temp->next;
+			nomor++;
+		}
+		printf(" --------------------\n");
+	}
+}
+
+void menu2() {
+	int pilih;
+
+	system("cls");
+	printf(" ----------------------------------------\n");
+	printf(" ========= MENU 2 - Insert Data =========\n");
+	printf(" ----------------------------------------\n\n");
+	listdoang();
+	printf(" 1. Insert Head\n");
+	printf(" 2. Insert Tail\n");
+    printf(" 3. Insert Posisi\n");
+	printf(" 4. Menu Utama\n");
+	printf(" Silakan masukkan pilihan anda : ");
+	scanf("%i", &pilih);
+	if (pilih == 1) {
+		inserthead();
+	} else if (pilih == 2) {
+		inserttail();
+	} else if (pilih == 3) {
+		insertposisi();
+	} else if (pilih == 4) {
+		menu_utama();
+	}
+}
+
+void menu3() {
+	int pilih;
+
+	system("cls");
+	printf(" ----------------------------------------\n");
+	printf(" ========= MENU 3 - Delete Data =========\n");
+	printf(" ----------------------------------------\n\n");
+	listdoang();
+	printf(" 1. Delete Head\n");
+	printf(" 2. Delete Tail\n");
+	printf(" 3. Delete Posisi\n");
+	printf(" 4. Menu Utama\n");
+	printf(" Silakan masukkan pilihan anda : ");
+	scanf("%i", &pilih);
+	if (pilih == 1) {
+		deletehead();
+	} else if (pilih == 2) {
+		deletetail();
+	} else if (pilih == 3) {
+		deleteposisi();
+	} else if (pilih == 4) {
+		menu_utama();
+	}
+}
+
+void menu4() {
+	int ubah, jadi;
+
+	system("cls");
+	printf(" ----------------------------------------\n");
+	printf(" ========= MENU 4 - Update Data =========\n");
+	printf(" ----------------------------------------\n\n");
+	listdoang();
+	updateposisi();
+	/*printf(" Pilih data yang akan diubah : ");
+	scanf("%i", &ubah);
+	printf(" Pilih data yang baru : ");
+	scanf("%i", &jadi);*/
+}
+
+void menu5() {
+	printf("\n Byebye!\n ");
+	printf("Ivan Andika Surya, 2021\n");
+	exit(EXIT_SUCCESS);
+}
+
+void listdoang(){
+    struct data *temp;
+    int nomor = 0;
+    
+	if (start == NULL) {
+		printf(" Maaf, Anda belum memasukkan data.\n");
+	} else {
+		temp = start;
+		printf(" Linked List yang telah dibuat adalah :\n");
+		printf(" --------------------\n");
+		printf("  No.\t Isi\n");
+		printf(" --------------------\n");
+		while (temp != NULL) {
+			printf("  %i\t %i	\n", nomor + 1, temp->nilai);
+			temp = temp->next;
+			nomor++;
+		}
+		printf(" --------------------\n");
+	}
+}
+
+//==================================================================================== ALGORITMA ======
+
+void inserthead() {
+	struct data *node;
+	node = (struct data *) malloc(sizeof(struct data));
+	if (node == NULL) {
+		printf("\n ERROR: Memory tidak cukup!\n");
+	}
+
+	printf("\n Masukkan data yang akan diinput : ");
+	scanf("%i", &node->nilai);
+	node->next = NULL;
+	if (start == NULL) {
+		start = node;
+	} else {
+		node->next = start;
+		start = node;
+	}
+}
+
+void inserttail() {
+	struct data *node, *temp;
+	node = (struct data *) malloc(sizeof(struct data));
+	if (node == NULL) {
+		printf("\n ERROR: Memory tidak cukup!\n");
+	}
+
+	printf("\n Masukkan data yang akan diinput : ");
+	scanf("%i", &node->nilai);
+	node->next = NULL;
+	if (start == NULL) {
+		start = node;
+	} else {
+		temp = start;
+		while (temp->next != NULL) {
+			temp = temp->next;
+		}
+		temp->next = node;
+	}
+}
+
+void deletehead() {
+	struct data *temp;
+	if (temp == NULL) {
+		printf(" Maaf, Anda belum memasukkan data.\n");
+	} else {
+		temp = start;
+		start = start->next;
+		printf("\n Data yang dihapus adalah : %i\n", temp->nilai);
+		free(temp);
+	}
+}
+
+void deletetail() {
+	struct data *node, *temp;
+	if (start == NULL) {
+		printf(" Maaf, Anda belum memasukkan data.\n");
+		exit(0);
+	} else if (start->next == NULL) {
+		temp = start;
+		start = NULL;
+		printf("\n Data yang dihapus adalah : %i\n", temp->nilai);
+		free(temp);
+	} else {
+		temp = start;
+		while (temp->next != NULL) {
+			node = temp;
+			temp = temp->next;
+		}
+		node->next = NULL;
+		printf("\n Data yang dihapus adalah : %i\n", temp->nilai);
+		free(temp);
+	}
+}
+
+//==================================================================================== POSISI ======
+
+void insertposisi() {
+	struct data *temp, *node;
+	int i, pos;
+	node = (struct data *) malloc(sizeof(struct data));
+	if (node == NULL) {
+		printf("\n ERROR: Memory tidak cukup!\n");
+	}
+	
+	printf("\n Pilih nomor data yang akan diisi : ");
+	scanf("%i", &pos);
+	printf("\n Masukkan data yang akan diinput : ");
+	scanf("%i", &node->nilai);
+
+	node->next = NULL;
+	if (pos == 1) {
+		node->next = start;
+		start = node;
+	} else {
+		for (i = 1, temp = start; i < pos-1; i++) {
+			temp = temp->next;
+			if (temp == NULL) {
+				printf("\n Maaf, anda memasukkan posisi yang salah.\n ");
+				system("pause");
+				menu_utama();
+			}
+		}
+		node->next = temp->next;
+		temp->next = node;
+	}
+}
+
+void deleteposisi() {
+	int i, pos;
+	struct data *node, *temp;
+	if (start == NULL) {
+		printf("\n ERROR: Memory tidak cukup!\n");
+	} else {
+		printf("\n Pilih nomor data yang akan dihapus : ");
+		scanf("%i", &pos);
+		if (pos == 1) {
+			temp = start;
+			start = start->next;
+			printf("\n\n Data yang dihapus adalah : %i\n", temp->nilai);
+			free(temp);
+		} else {
+			temp = start;
+			for (i = 1; i < pos; i++) {
+				node = temp;
+				temp = temp->next;
+				if (temp == NULL) {
+					printf("\n Maaf, anda memasukkan posisi yang salah.\n ");
+					system("pause");
+					menu_utama();
+				}
+			}
+			node->next = temp->next;
+			printf("\n\n Data yang dihapus adalah : %i\n", temp->nilai);
+			free(temp);
+		}
+	}
+}
+
+void updateposisi(){
+	struct data *temp, *node;
+	int i, pos;
+	node = (struct data *) malloc(sizeof(struct data));
+	if (node == NULL) {
+		printf("\n ERROR: Memory tidak cukup!\n");
+	}
+	
+	printf("\n Pilih nomor data yang akan diisi : ");
+	scanf("%i", &pos);
+	printf("\n Masukkan data yang akan diinput : ");
+	scanf("%i", &node->nilai);
+
+	node->next = NULL;
+	if (pos == 1) {
+		node->next = start;
+		start = node;
+		/*temp = start;
+		start = start->next;
+		printf("\n\n Data yang dihapus adalah : %i\n", temp->nilai);
+		free(temp);*/
+	} else {
+		for (i = 1, temp = start; i < pos-1; i++) {
+			temp = temp->next;
+			if (temp == NULL) {
+				printf("\n Maaf, anda memasukkan posisi yang salah.\n ");
+				system("pause");
+				menu_utama();
+			}
+		}
+		node->next = temp->next;
+		temp->next = node;
+		temp = start;
+		for (i = 0; i < pos; i++) {
+			node = temp;
+			temp = temp->next;
+		}
+		node->next = temp->next;
+		printf("\n\n Data yang dihapus adalah : %i\n", temp->nilai);
+		free(temp);
+	}
+}
+
+void main() {
+	menu_utama();
+}
