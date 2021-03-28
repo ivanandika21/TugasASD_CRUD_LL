@@ -24,37 +24,33 @@ int menu_utama() {
 		printf(" Silakan masukkan pilihan anda : ");
 		scanf("%i", &pilih);
 		switch (pilih) {
-		case 1: {
-			menu1(); //menu 1 berisi read saja
-			printf(" ");
-			system("pause");
-			menu_utama();
-		}
-
-		case 2: {
-			menu2(); //menu 2 berisi Input Head dan Input Tail
-			printf(" ");
-			system("pause");
-			menu_utama();
-		}
-
-		case 3: {
-			menu3(); //menu 3 berisi Delete Head dan Delete Tails (Delete "angka" opsional)
-			printf(" ");
-			system("pause");
-			menu_utama();
-		}
-
-		case 4: {
-			menu4(); //menu 4 berisi Update data menggunakan perulangan sampai scanf == "angka"
-			printf(" ");
-			system("pause");
-			menu_utama();
-		}
-
-		case 5: {
-			menu5(); //keluar program
-		}
+			case 1: {
+				menu1(); //menu 1 berisi read saja
+				printf(" ");
+				system("pause");
+				menu_utama();
+			}
+			case 2: {
+				menu2(); //menu 2 berisi Input Head dan Input Tail
+				printf(" ");
+				system("pause");
+				menu_utama();
+			}
+			case 3: {
+				menu3(); //menu 3 berisi Delete Head dan Delete Tails (Delete "angka" opsional)
+				printf(" ");
+				system("pause");
+				menu_utama();
+			}
+			case 4: {
+				menu4(); //menu 4 berisi Update data menggunakan perulangan sampai scanf == "angka"
+				printf(" ");
+				system("pause");
+				menu_utama();
+			}
+			case 5: {
+				menu5(); //keluar program
+			}
 		}
 	}
 }
@@ -103,7 +99,8 @@ void menu3() {
 	printf(" 1. Delete Head\n");
 	printf(" 2. Delete Tail\n");
 	printf(" 3. Delete Posisi\n");
-	printf(" 4. Menu Utama\n");
+	printf(" 4. Delete Nilai\n");
+	printf(" 5. Menu Utama\n");
 	printf(" Silakan masukkan pilihan anda : ");
 	scanf("%i", &pilih);
 	if (pilih == 1) {
@@ -113,20 +110,22 @@ void menu3() {
 	} else if (pilih == 3) {
 		deleteposisi();
 	} else if (pilih == 4) {
+		deletenilai();
+	} else if (pilih == 5) {
 		menu_utama();
 	}
 }
 
 void menu4() {
-	int ubah, jadi;
-
 	system("cls");
 	printf(" ----------------------------------------\n");
 	printf(" ========= MENU 4 - Update Data =========\n");
 	printf(" ----------------------------------------\n\n");
 	listdoang();
 	updateposisi();
-	/*printf(" Pilih data yang akan diubah : ");
+	
+	/*int ubah, jadi;
+	printf(" Pilih data yang akan diubah : ");
 	scanf("%i", &ubah);
 	printf(" Pilih data yang baru : ");
 	scanf("%i", &jadi);*/
@@ -216,7 +215,7 @@ void deletetail() {
 	struct data *node, *temp;
 	if (start == NULL) {
 		printf(" Maaf, Anda belum memasukkan data.\n");
-		exit(0);
+		menu_utama();
 	} else if (start->next == NULL) {
 		temp = start;
 		start = NULL;
@@ -232,6 +231,45 @@ void deletetail() {
 		printf("\n Data yang dihapus adalah : %i\n", temp->nilai);
 		free(temp);
 	}
+}
+
+void deletenilai(){
+	int i, angka;
+	struct data *node, *temp;
+	if (start == NULL) {
+		printf("\n ERROR: Memory tidak cukup!\n");
+	} else {
+		printf("\n Pilih isi data yang akan dihapus : ");
+		scanf("%i", &angka);
+		if (angka == start->nilai) {
+			temp = start;
+			start = start->next;
+			printf("\n\n Data yang dihapus adalah : %i\n", temp->nilai);
+			free(temp);
+		} else {
+			temp = start;
+			for (i = 1; i < 999; i++) {
+				node = temp;
+				temp = temp->next;
+				if(angka == temp->nilai){
+					goto keluar;
+				}
+				if (temp->next == NULL) {
+					printf("\n Maaf, anda memasukkan nilai yang salah.\n ");
+					system("pause");
+					menu_utama();
+				}
+			}
+			keluar:
+			node->next = temp->next;
+			printf("\n Data yang dihapus adalah : %i\n", temp->nilai);
+			free(temp);
+		}
+	}
+}
+
+void updatenilai(){
+	
 }
 
 //==================================================================================== POSISI ======
@@ -292,7 +330,7 @@ void deleteposisi() {
 				}
 			}
 			node->next = temp->next;
-			printf("\n\n Data yang dihapus adalah : %i\n", temp->nilai);
+			printf("\n Data yang dihapus adalah : %i\n", temp->nilai);
 			free(temp);
 		}
 	}
