@@ -1,31 +1,24 @@
 #include <stdio.h>
+#include <string.h>
 #include <stdlib.h>
+#include <time.h>
+#include <windows.h>
 
 // Nama		: Ivan Andika Surya
 // NIM		: 672019171
 // Kelas	: ASD G
 // Program TR - CRUD Linked List + Sorting + Searching
 // 7 April 2021
-/*
-printf("  ]]]]]] ]]]]]]  ]]    ]] ]]]]]]  ]]]]]]] ]]]]]]]\n");
-printf(" ]]      ]]   ]] ]]    ]] ]]   ]] ]]      ]]\n");
-printf(" ]]      ]]]]]]  ]]    ]] ]]   ]] ]]]]]]] ]]]]]]]\n");
-printf(" ]]      ]]   ]] ]]    ]] ]]   ]]      ]]      ]]\n");
-printf("  ]]]]]] ]]   ]]  ]]]]]]  ]]]]]]  ]]]]]]] ]]]]]]]\n");*/
 
 //=================================================== INISIALISASI STRUCT ====
 struct data {
-	int id;
-	int nim;
-	char nama[200];
-	int umur;
-	char alamat[200];
-	char prodi[200];
-	
+	int id, nim, umur;
+	char nama[200], alamat[200], prodi[200];
 	struct data *next;
 };
 struct data *start = NULL;
 
+char username[20], password[20];
 int id_awal = 1000;
 //============================================================ MENU UTAMA ====
 int menu_utama() {
@@ -99,7 +92,7 @@ void menu1() {
 	printf(" ---------------------------------------------------------------------------\n");
 	printf(" ============================ MENU 1 - Read Data ===========================\n");
 	printf(" ---------------------------------------------------------------------------\n\n");
-	listdoang();
+	read();
 }
 
 void menu2() {
@@ -109,7 +102,7 @@ void menu2() {
 	printf(" ---------------------------------------------------------------------------\n");
 	printf(" =========================== MENU 2 - Insert Data ==========================\n");
 	printf(" ---------------------------------------------------------------------------\n\n");
-	listdoang();
+	read();
 	printf(" 1. Insert Head\n");
 	printf(" 2. Insert Tail\n");
 	printf(" 3. Insert Posisi\n");
@@ -136,7 +129,7 @@ void menu3() {
 	printf(" ---------------------------------------------------------------------------\n");
 	printf(" =========================== MENU 3 - Delete Data ==========================\n");
 	printf(" ---------------------------------------------------------------------------\n\n");
-	listdoang();
+	read();
 	printf(" 1. Delete Head\n");
 	printf(" 2. Delete Tail\n");
 	printf(" 3. Delete Posisi\n");
@@ -166,7 +159,7 @@ void menu4() {
 	printf(" ---------------------------------------------------------------------------\n");
 	printf(" =========================== MENU 4 - Update Data ==========================\n");
 	printf(" ---------------------------------------------------------------------------\n\n");
-	listdoang();
+	read();
 	printf(" 1. Update Head\n");
 	printf(" 2. Update Tail\n");
 	printf(" 3. Update Posisi\n");
@@ -196,7 +189,7 @@ void menu5() {
 	printf(" ---------------------------------------------------------------------------\n");
 	printf(" ========================== MENU 5 - Sorting Data ==========================\n");
 	printf(" ---------------------------------------------------------------------------\n\n");
-	listdoang();
+	read();
 	printf(" 1. Sorting Ascending\n");
 	printf(" 2. Sorting Descending\n");
 	printf(" 3. Menu Utama\n");
@@ -218,7 +211,7 @@ void menu6() {
 	printf(" ---------------------------------------------------------------------------\n");
 	printf(" ========================== MENU 6 - Search Data ===========================\n");
 	printf(" ---------------------------------------------------------------------------\n\n");
-	listdoang();
+	read();
 	search();
 }
 
@@ -236,8 +229,9 @@ void menuerror(){
 }
 
 //============================================================= READ DATA ====
-void listdoang() {
+void read() {
 	struct data *temp;
+	int no = 1;
 
 	if (start == NULL) {
 		printf(" Sepertinya belum ada data apapun, data akan muncul disini!\n");
@@ -245,11 +239,12 @@ void listdoang() {
 		temp = start;
 		printf(" Data yang tersedia adalah :\n");
 		printf(" ---------------------------------------------------------------------------\n");
-		printf("  %-6s%-12s%-25s%-10s%-15s%-10s\n", "ID", "NIM", "Nama Mahasiswa", "Umur", "Alamat", "Prodi");
+		printf("  %-4s%-6s%-11s%-23s%-9s%-15s%-5s\n", "No", "ID", "NIM", "Nama Mahasiswa", "Umur", "Alamat", "Prodi");
 		printf(" ---------------------------------------------------------------------------\n");
 		while (temp != NULL) {
-			printf("  %-6i%-12i%-25s%-10i%-15s%-10s\n", temp->id, temp->nim, temp->nama, temp->umur, temp->alamat, temp->prodi);
+			printf("  %-4i%-6i%-11i%-23.21s%-9i%-15.13s%-5.5s\n", no, temp->id, temp->nim, temp->nama, temp->umur, temp->alamat, temp->prodi);
 			temp = temp->next;
+			no++;
 		}
 		printf(" ---------------------------------------------------------------------------\n");
 	}
@@ -259,24 +254,21 @@ void listdoang() {
 void inserthead() {
 	struct data *node;
 	node = (struct data *) malloc(sizeof(struct data));
+	char tampung[200], str[100];
 	
 	id_awal = id_awal + 1;
 	node->id = id_awal;
-
-	printf("\n Masukkan data untuk ID %i\n", node->id);
+	printf("\n Masukkan data untuk ID %i\n\n", node->id);
 	printf(" NIM\t\t: ");
 	scanf("%i", &node->nim);
 	printf(" Nama Lengkap\t: ");
-	fflush(stdin);
-	gets(node->nama);
+	fflush(stdin); gets(node->nama);
 	printf(" Umur\t\t: ");
 	scanf("%i", &node->umur);
 	printf(" Alamat\t\t: ");
 	scanf("%s", &node->alamat);
-	//tambahkan auto detect prodi
 	printf(" Prodi\t\t: ");
 	scanf("%s", &node->prodi);
-	
 	node->next = NULL;
 	if (start == NULL) {
 		start = node;
@@ -293,20 +285,17 @@ void inserttail() {
 	
 	id_awal = id_awal + 1;
 	node->id = id_awal;
-	printf("\n Masukkan data untuk ID %i\n", node->id);
+	printf("\n Masukkan data untuk ID %i\n\n", node->id);
 	printf(" NIM\t\t: ");
 	scanf("%i", &node->nim);
 	printf(" Nama Lengkap\t: ");
-	fflush(stdin);
-	gets(node->nama);
+	fflush(stdin); gets(node->nama);
 	printf(" Umur\t\t: ");
 	scanf("%i", &node->umur);
 	printf(" Alamat\t\t: ");
 	scanf("%s", &node->alamat);
-	//tambahkan auto detect prodi
 	printf(" Prodi\t\t: ");
 	scanf("%s", &node->prodi);
-	
 	node->next = NULL;
 	if (start == NULL) {
 		start = node;
@@ -321,7 +310,43 @@ void inserttail() {
 }
 
 void insertposisi() {
+	struct data *temp, *node;
+	int i, posisi;
+	node = (struct data *) malloc(sizeof(struct data));
 	
+	printf("\n Pilih nomor data yang akan diisi : ");
+	scanf("%i", &posisi);
+	
+	id_awal = id_awal + 1;
+	node->id = id_awal;
+	printf("\n Masukkan data untuk ID %i\n\n", node->id);
+	printf(" NIM\t\t: ");
+	scanf("%i", &node->nim);
+	printf(" Nama Lengkap\t: ");
+	fflush(stdin); gets(node->nama);
+	printf(" Umur\t\t: ");
+	scanf("%i", &node->umur);
+	printf(" Alamat\t\t: ");
+	scanf("%s", &node->alamat);
+	printf(" Prodi\t\t: ");
+	scanf("%s", &node->prodi);
+
+	node->next = NULL;
+	if (posisi == 1) {
+		node->next = start;
+		start = node;
+	} else {
+		for (i = 1, temp = start; i < posisi - 1; i++) {
+			temp = temp->next;
+			if (temp == NULL) {
+				printf("\n Maaf, anda memasukkan posisi yang salah.\n ");
+				system("pause");
+				menu_utama();
+			}
+		}
+		node->next = temp->next;
+		temp->next = node;
+	}
 }
 
 //====================================================== ALGORITMA DELETE ====
@@ -335,7 +360,6 @@ void deletehead() {
 		temp = start;
 		start = start->next;
 		printf("\n Data mahasiswa dengan ID %i berhasil dihapus!\n", temp->id);
-		id_awal = id_awal - 1;
 		free(temp);
 	}
 }
@@ -350,7 +374,6 @@ void deletetail() {
 		temp = start;
 		start = NULL;
 		printf("\n Data mahasiswa dengan ID %i berhasil dihapus!\n", temp->id);
-		id_awal = id_awal - 1;
 		free(temp);
 	} else {
 		temp = start;
@@ -360,13 +383,41 @@ void deletetail() {
 		}
 		node->next = NULL;
 		printf("\n Data mahasiswa dengan ID %i berhasil dihapus!\n", temp->id);
-		id_awal = id_awal - 1;
 		free(temp);
 	}
 }
 
 void deleteposisi() {
+	struct data *node, *temp;
+	int i, posisi;
 	
+	if (start == NULL) {
+		printf(" Maaf, Anda belum memasukkan data.\n");
+		menu_utama();
+	} else {
+		printf("\n Pilih nomor data yang akan dihapus : ");
+		scanf("%i", &posisi);
+		if (posisi == 1) {
+			temp = start;
+			start = start->next;
+			printf("\n\n Data yang dihapus adalah : %i\n", temp->id);
+			free(temp);
+		} else {
+			temp = start;
+			for (i = 1; i < posisi; i++) {
+				node = temp;
+				temp = temp->next;
+				if (temp == NULL) {
+					printf("\n Maaf, anda memasukkan posisi yang salah.\n ");
+					system("pause");
+					menu_utama();
+				}
+			}
+			node->next = temp->next;
+			printf("\n Data yang dihapus adalah : %i\n", temp->id);
+			free(temp);
+		}
+	}
 }
 
 void deleteid() {
@@ -383,7 +434,6 @@ void deleteid() {
 			temp = start;
 			start = start->next;
 			printf("\n Data mahasiswa dengan ID %i berhasil dihapus!\n", temp->id);
-			id_awal = id_awal - 1;
 			free(temp);
 		} else {
 			temp = start;
@@ -402,7 +452,6 @@ void deleteid() {
 			keluar:
 			node->next = temp->next;
 			printf("\n Data mahasiswa dengan ID %i berhasil dihapus!\n", temp->id);
-			id_awal = id_awal - 1;
 			free(temp);
 		}
 	}
@@ -410,14 +459,153 @@ void deleteid() {
 
 //====================================================== ALGORITMA UPDATE ====
 void updatehead() {
+	struct data *temp, *node, *tempsebelum;
+
+	if (temp == NULL) {
+		printf(" Sepertinya belum ada data apapun, data akan muncul disini!\n");
+		menu_utama();
+	} else {
+		temp = start;
+		start = start->next;
+		tempsebelum = temp->id;
+		free(temp);
+	}
 	
+	node = (struct data *) malloc(sizeof(struct data));
+	node->id = tempsebelum;
+	printf("\n Masukkan data untuk ID %i\n\n", tempsebelum);
+	printf(" NIM\t\t: ");
+	scanf("%i", &node->nim);
+	printf(" Nama Lengkap\t: ");
+	fflush(stdin); gets(node->nama);
+	printf(" Umur\t\t: ");
+	scanf("%i", &node->umur);
+	printf(" Alamat\t\t: ");
+	scanf("%s", &node->alamat);
+	printf(" Prodi\t\t: ");
+	scanf("%s", &node->prodi);
+	node->next = NULL;
+	if (start == NULL) {
+		start = node;
+	} else {
+		node->next = start;
+		start = node;
+	}
+	printf("\n Data dengan ID %i berhasil di update!\n", tempsebelum);
 }
 
 void updatetail() {
-	
+	struct data *node, *temp, *tempsebelum;
+
+	if (start == NULL) {
+		printf(" Maaf, Anda belum memasukkan data.\n");
+		menu_utama();
+	} else if (start->next == NULL) {
+		temp = start;
+		start = NULL;
+		tempsebelum = temp->id;
+		free(temp);
+	} else {
+		temp = start;
+		while (temp->next != NULL) {
+			node = temp;
+			temp = temp->next;
+		}
+		node->next = NULL;
+		tempsebelum = temp->id;
+		free(temp);
+	}
+
+	node = (struct data *) malloc(sizeof(struct data));
+	node->id = tempsebelum;
+	printf("\n Masukkan data untuk ID %i\n\n", tempsebelum);
+	printf(" NIM\t\t: ");
+	scanf("%i", &node->nim);
+	printf(" Nama Lengkap\t: ");
+	fflush(stdin); gets(node->nama);
+	printf(" Umur\t\t: ");
+	scanf("%i", &node->umur);
+	printf(" Alamat\t\t: ");
+	scanf("%s", &node->alamat);
+	printf(" Prodi\t\t: ");
+	scanf("%s", &node->prodi);
+	node->next = NULL;
+	if (start == NULL) {
+		start = node;
+	} else {
+		temp = start;
+		while (temp->next != NULL) {
+			temp = temp->next;
+		}
+		temp->next = node;
+	}
+	printf("\n Data dengan ID %i berhasil di update!\n", tempsebelum);
 }
 
 void updateposisi() {
+	//hapusposisi
+	struct data *node, *temp, *tempsebelum;
+	int i, posisi;
+	
+	if (start == NULL) {
+		printf(" Maaf, Anda belum memasukkan data.\n");
+		menu_utama();
+	} else {
+		printf("\n Pilih nomor data yang akan diupdate : ");
+		scanf("%i", &posisi);
+		if (posisi == 1) {
+			temp = start;
+			start = start->next;
+			tempsebelum = temp->id;
+			free(temp);
+		} else {
+			temp = start;
+			for (i = 1; i < posisi; i++) {
+				node = temp;
+				temp = temp->next;
+				if (temp == NULL) {
+					printf("\n Maaf, anda memasukkan posisi yang salah.\n ");
+					system("pause");
+					menu_utama();
+				}
+			}
+			node->next = temp->next;
+			tempsebelum = temp->id;
+			free(temp);
+		}
+	}
+	//insertposisi
+	node = (struct data *) malloc(sizeof(struct data));
+	
+	node->id = tempsebelum;
+	printf("\n Masukkan data untuk ID %i\n\n", node->id);
+	printf(" NIM\t\t: ");
+	scanf("%i", &node->nim);
+	printf(" Nama Lengkap\t: ");
+	fflush(stdin); gets(node->nama);
+	printf(" Umur\t\t: ");
+	scanf("%i", &node->umur);
+	printf(" Alamat\t\t: ");
+	scanf("%s", &node->alamat);
+	printf(" Prodi\t\t: ");
+	scanf("%s", &node->prodi);
+
+	node->next = NULL;
+	if (posisi == 1) {
+		node->next = start;
+		start = node;
+	} else {
+		for (i = 1, temp = start; i < posisi - 1; i++) {
+			temp = temp->next;
+			if (temp == NULL) {
+				printf("\n Maaf, anda memasukkan posisi yang salah.\n ");
+				system("pause");
+				menu_utama();
+			}
+		}
+		node->next = temp->next;
+		temp->next = node;
+	}
 	
 }
 
@@ -430,21 +618,17 @@ void updateid() {
 	scanf("%i", &id_baca);
 	
 	node->id = id_baca;
-
-	printf("\n Masukkan data baru untuk ID %i\n", node->id);
+    printf("\n Masukkan data untuk ID %i\n\n", node->id);
 	printf(" NIM\t\t: ");
 	scanf("%i", &node->nim);
 	printf(" Nama Lengkap\t: ");
-	fflush(stdin);
-	gets(node->nama);
+	fflush(stdin); gets(node->nama);
 	printf(" Umur\t\t: ");
 	scanf("%i", &node->umur);
 	printf(" Alamat\t\t: ");
 	scanf("%s", &node->alamat);
-	//tambahkan auto detect prodi
 	printf(" Prodi\t\t: ");
 	scanf("%s", &node->prodi);
-
 	temp_id = node->id;
 	node->next = NULL;
 	if (id_baca == start->id) {
@@ -545,7 +729,7 @@ void sortingasc() {
 				node = node->next;
 			}
 		}
-		listdoang();
+		read();
 	}
 }
 
@@ -592,7 +776,7 @@ void sortingdes() {
 				node = node->next;
 			}
 		}
-		listdoang();
+		read();
 	}
 }
 
@@ -631,8 +815,75 @@ void search() {
 	}
 }
 
-
 //============================================================= VOID MAIN ====
+void login() {system("color F0");
+	int i;
+	
+	printf("\n\n ");
+	for(i = 0; i <= 38; i++){
+		printf(".", i);
+		Sleep(15);
+	}
+
+	for(i = 0; i <= 5; i++){
+		//--------------------ANIMASI--------------------//
+			system("cls");
+		printf("\n\n Loading ...");
+			Sleep(50);
+			system("cls");
+		printf("\n\n Loading ......");
+			Sleep(50);
+			system("cls");
+		printf("\n\n Loading .........");
+			Sleep(100);
+	}
+	login_in:
+			system("cls");
+			Sleep(5);
+		printf("\n");
+		printf("  ]]]]]] ]]]]]]  ]]    ]] ]]]]]]  ]]]]]]] ]]]]]]]\n");
+		printf(" ]]      ]]   ]] ]]    ]] ]]   ]] ]]      ]]\n");
+		printf(" ]]      ]]]]]]  ]]    ]] ]]   ]] ]]]]]]] ]]]]]]]\n");
+		printf(" ]]      ]]   ]] ]]    ]] ]]   ]]      ]]      ]]\n");
+		printf("  ]]]]]] ]]   ]]  ]]]]]]  ]]]]]]  ]]]]]]] ]]]]]]]\n\n");
+		printf(" ============== DATABASE MAHASISWA ==============\n");
+		printf(" |||||||||||||||||| L O G I N ||||||||||||||||||| \n\n");
+		printf("   Hints >> Username : ivan   Password : andika\n\n");
+			Sleep(500);
+		printf("   Username : ");
+		gets(username);
+		printf("   Password : ");
+		gets(password);
+	
+	if (strcmp(username,"ivan") == 0 && strcmp(password,"andika") == 0) {
+		printf("   Selamat Datang %s!\n\n   Tekan apapun untuk melanjutkan ...",username);
+		scanf("%c");
+		menu_utama();
+	}else{
+		system("cls");
+		printf("\n\n ");
+		for(i = 0; i <= 5; i++){
+		//--------------------ANIMASI--------------------//
+			system("cls");
+		printf("\n\n Loading ...");
+			Sleep(50);
+			system("cls");
+		printf("\n\n Loading ......");
+			Sleep(50);
+			system("cls");
+		printf("\n\n Loading .........");
+			Sleep(100);
+		}
+		printf("\n AKSES DITOLAK !!\n");
+			scanf("%c");
+		
+		system("cls");
+		goto login_in;
+	}
+	
+}
+
 void main() {
+	login();
 	menu_utama();
 }
