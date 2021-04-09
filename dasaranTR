@@ -1,0 +1,638 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+// Nama		: Ivan Andika Surya
+// NIM		: 672019171
+// Kelas	: ASD G
+// Program TR - CRUD Linked List + Sorting + Searching
+// 7 April 2021
+/*
+printf("  ]]]]]] ]]]]]]  ]]    ]] ]]]]]]  ]]]]]]] ]]]]]]]\n");
+printf(" ]]      ]]   ]] ]]    ]] ]]   ]] ]]      ]]\n");
+printf(" ]]      ]]]]]]  ]]    ]] ]]   ]] ]]]]]]] ]]]]]]]\n");
+printf(" ]]      ]]   ]] ]]    ]] ]]   ]]      ]]      ]]\n");
+printf("  ]]]]]] ]]   ]]  ]]]]]]  ]]]]]]  ]]]]]]] ]]]]]]]\n");*/
+
+//=================================================== INISIALISASI STRUCT ====
+struct data {
+	int id;
+	int nim;
+	char nama[200];
+	int umur;
+	char alamat[200];
+	char prodi[200];
+	
+	struct data *next;
+};
+struct data *start = NULL;
+
+int id_awal = 1000;
+//============================================================ MENU UTAMA ====
+int menu_utama() {
+	char pilih;
+
+	while (1) {
+		system("cls");
+		printf(" ---------------------------------------------------------------------------\n");
+		printf(" ================================ MENU UTAMA ===============================\n");
+		printf(" ---------------------------------------------------------------------------\n");
+		printf(" 1. Read Data\n");
+		printf(" 2. Insert Data\n");
+		printf(" 3. Delete Data\n");
+		printf(" 4. Update Data\n");
+		printf(" 5. Sorting Data\n");
+		printf(" 6. Search Data\n");
+		printf(" 7. Keluar\n");
+		printf(" ---------------------------------------------------------------------------\n");
+		printf(" Silakan masukkan pilihan anda : ");
+		scanf("%s", &pilih);
+		switch (pilih) {
+			case '1': {
+				menu1();
+				printf(" ");
+				system("pause");
+				menu_utama();
+			}
+			case '2': {
+				menu2();
+				printf(" ");
+				system("pause");
+				menu_utama();
+			}
+			case '3': {
+				menu3();
+				printf(" ");
+				system("pause");
+				menu_utama();
+			}
+			case '4': {
+				menu4();
+				printf(" ");
+				system("pause");
+				menu_utama();
+			}
+			case '5': {
+				menu5();
+				printf(" ");
+				system("pause");
+				menu_utama();
+			}
+			case '6': {
+				menu6();
+				printf(" ");
+				system("pause");
+				menu_utama();
+			}
+			case '7': {
+				menu7();
+			}
+			default: {
+				menuerror();
+			}
+		}
+	}
+}
+
+//============================================================= VOID MENU ====
+void menu1() {
+	system("cls");
+	printf(" ---------------------------------------------------------------------------\n");
+	printf(" ============================ MENU 1 - Read Data ===========================\n");
+	printf(" ---------------------------------------------------------------------------\n\n");
+	listdoang();
+}
+
+void menu2() {
+	char pilih;
+
+	system("cls");
+	printf(" ---------------------------------------------------------------------------\n");
+	printf(" =========================== MENU 2 - Insert Data ==========================\n");
+	printf(" ---------------------------------------------------------------------------\n\n");
+	listdoang();
+	printf(" 1. Insert Head\n");
+	printf(" 2. Insert Tail\n");
+	printf(" 3. Insert Posisi\n");
+	printf(" 4. Menu Utama\n");
+	printf(" Silakan masukkan pilihan anda : ");
+	scanf("%s", &pilih);
+	if (pilih == '1') {
+		inserthead();
+	} else if (pilih == '2') {
+		inserttail();
+	} else if (pilih == '3') {
+		insertposisi();
+	} else if (pilih == '4') {
+		menu_utama();
+	} else {
+		menuerror();
+	}
+}
+
+void menu3() {
+	char pilih;
+
+	system("cls");
+	printf(" ---------------------------------------------------------------------------\n");
+	printf(" =========================== MENU 3 - Delete Data ==========================\n");
+	printf(" ---------------------------------------------------------------------------\n\n");
+	listdoang();
+	printf(" 1. Delete Head\n");
+	printf(" 2. Delete Tail\n");
+	printf(" 3. Delete Posisi\n");
+	printf(" 4. Delete ID\n");
+	printf(" 5. Menu Utama\n");
+	printf(" Silakan masukkan pilihan anda : ");
+	scanf("%s", &pilih);
+	if (pilih == '1') {
+		deletehead();
+	} else if (pilih == '2') {
+		deletetail();
+	} else if (pilih == '3') {
+		deleteposisi();
+	} else if (pilih == '4') {
+		deleteid();
+	} else if (pilih == '5') {
+		menu_utama();
+	} else {
+		menuerror();
+	}
+}
+
+void menu4() {
+	char pilih;
+
+	system("cls");
+	printf(" ---------------------------------------------------------------------------\n");
+	printf(" =========================== MENU 4 - Update Data ==========================\n");
+	printf(" ---------------------------------------------------------------------------\n\n");
+	listdoang();
+	printf(" 1. Update Head\n");
+	printf(" 2. Update Tail\n");
+	printf(" 3. Update Posisi\n");
+	printf(" 4. Update ID\n");
+	printf(" 5. Menu Utama\n");
+	printf(" Silakan masukkan pilihan anda : ");
+	scanf("%s", &pilih);
+	if (pilih == '1') {
+		updatehead();
+	} else if (pilih == '2') {
+		updatetail();
+	} else if (pilih == '3') {
+		updateposisi();
+	} else if (pilih == '4') {
+		updateid();
+	} else if (pilih == '5') {
+		menu_utama();
+	} else {
+		menuerror();
+	}
+}
+
+void menu5() {
+	char pilih;
+
+	system("cls");
+	printf(" ---------------------------------------------------------------------------\n");
+	printf(" ========================== MENU 5 - Sorting Data ==========================\n");
+	printf(" ---------------------------------------------------------------------------\n\n");
+	listdoang();
+	printf(" 1. Sorting Ascending\n");
+	printf(" 2. Sorting Descending\n");
+	printf(" 3. Menu Utama\n");
+	printf(" Silakan masukkan pilihan anda : ");
+	scanf("%s", &pilih);
+	if (pilih == '1') {
+		sortingasc();
+	} else if (pilih == '2') {
+		sortingdes();
+	} else if (pilih == '3') {
+		menu_utama();
+	} else {
+		menuerror();
+	}
+}
+
+void menu6() {
+	system("cls");
+	printf(" ---------------------------------------------------------------------------\n");
+	printf(" ========================== MENU 6 - Search Data ===========================\n");
+	printf(" ---------------------------------------------------------------------------\n\n");
+	listdoang();
+	search();
+}
+
+void menu7() {
+	printf("\n Byebye!\n ");
+	printf("Ivan Andika Surya, 2021\n");
+	exit(EXIT_SUCCESS);
+}
+
+void menuerror(){
+	printf("\n Mohon masukkan pilihan dengan benar.\n");
+	printf(" ");
+	system("pause");
+	menu_utama();
+}
+
+//============================================================= READ DATA ====
+void listdoang() {
+	struct data *temp;
+
+	if (start == NULL) {
+		printf(" Sepertinya belum ada data apapun, data akan muncul disini!\n");
+	} else {
+		temp = start;
+		printf(" Data yang tersedia adalah :\n");
+		printf(" ---------------------------------------------------------------------------\n");
+		printf("  %-6s%-12s%-25s%-10s%-15s%-10s\n", "ID", "NIM", "Nama Mahasiswa", "Umur", "Alamat", "Prodi");
+		printf(" ---------------------------------------------------------------------------\n");
+		while (temp != NULL) {
+			printf("  %-6i%-12i%-25s%-10i%-15s%-10s\n", temp->id, temp->nim, temp->nama, temp->umur, temp->alamat, temp->prodi);
+			temp = temp->next;
+		}
+		printf(" ---------------------------------------------------------------------------\n");
+	}
+}
+
+//====================================================== ALGORITMA INSERT ====
+void inserthead() {
+	struct data *node;
+	node = (struct data *) malloc(sizeof(struct data));
+	
+	id_awal = id_awal + 1;
+	node->id = id_awal;
+
+	printf("\n Masukkan data untuk ID %i\n", node->id);
+	printf(" NIM\t\t: ");
+	scanf("%i", &node->nim);
+	printf(" Nama Lengkap\t: ");
+	fflush(stdin);
+	gets(node->nama);
+	printf(" Umur\t\t: ");
+	scanf("%i", &node->umur);
+	printf(" Alamat\t\t: ");
+	scanf("%s", &node->alamat);
+	//tambahkan auto detect prodi
+	printf(" Prodi\t\t: ");
+	scanf("%s", &node->prodi);
+	
+	node->next = NULL;
+	if (start == NULL) {
+		start = node;
+	} else {
+		node->next = start;
+		start = node;
+	}
+	printf("\n Data mahasiswa dengan ID %i berhasil diinput!\n", node->id);
+}
+
+void inserttail() {
+	struct data *node, *temp;
+	node = (struct data *) malloc(sizeof(struct data));
+	
+	id_awal = id_awal + 1;
+	node->id = id_awal;
+	printf("\n Masukkan data untuk ID %i\n", node->id);
+	printf(" NIM\t\t: ");
+	scanf("%i", &node->nim);
+	printf(" Nama Lengkap\t: ");
+	fflush(stdin);
+	gets(node->nama);
+	printf(" Umur\t\t: ");
+	scanf("%i", &node->umur);
+	printf(" Alamat\t\t: ");
+	scanf("%s", &node->alamat);
+	//tambahkan auto detect prodi
+	printf(" Prodi\t\t: ");
+	scanf("%s", &node->prodi);
+	
+	node->next = NULL;
+	if (start == NULL) {
+		start = node;
+	} else {
+		temp = start;
+		while (temp->next != NULL) {
+			temp = temp->next;
+		}
+		temp->next = node;
+	}
+	printf("\n Data mahasiswa dengan ID %i berhasil diinput!\n", node->id);
+}
+
+void insertposisi() {
+	
+}
+
+//====================================================== ALGORITMA DELETE ====
+void deletehead() {
+	struct data *temp;
+
+	if (temp == NULL) {
+		printf(" Sepertinya belum ada data apapun, silakan input terlebih dahulu!");
+		menu_utama();
+	} else {
+		temp = start;
+		start = start->next;
+		printf("\n Data mahasiswa dengan ID %i berhasil dihapus!\n", temp->id);
+		id_awal = id_awal - 1;
+		free(temp);
+	}
+}
+
+void deletetail() {
+	struct data *node, *temp;
+
+	if (start == NULL) {
+		printf(" Sepertinya belum ada data apapun, silakan input terlebih dahulu!");
+		menu_utama();
+	} else if (start->next == NULL) {
+		temp = start;
+		start = NULL;
+		printf("\n Data mahasiswa dengan ID %i berhasil dihapus!\n", temp->id);
+		id_awal = id_awal - 1;
+		free(temp);
+	} else {
+		temp = start;
+		while (temp->next != NULL) {
+			node = temp;
+			temp = temp->next;
+		}
+		node->next = NULL;
+		printf("\n Data mahasiswa dengan ID %i berhasil dihapus!\n", temp->id);
+		id_awal = id_awal - 1;
+		free(temp);
+	}
+}
+
+void deleteposisi() {
+	
+}
+
+void deleteid() {
+	struct data *node, *temp;
+	int i, id_baca;
+
+	if (start == NULL) {
+		printf(" Sepertinya belum ada data apapun, silakan input terlebih dahulu!");
+		menu_utama();
+	} else {
+		printf("\n Pilih ID data mahasiswa yang akan dihapus : ");
+		scanf("%i", &id_baca);
+		if (id_baca == start->id) {
+			temp = start;
+			start = start->next;
+			printf("\n Data mahasiswa dengan ID %i berhasil dihapus!\n", temp->id);
+			id_awal = id_awal - 1;
+			free(temp);
+		} else {
+			temp = start;
+			for (i = 1; i < 9999; i++) {
+				node = temp;
+				temp = temp->next;
+				if (id_baca == temp->id) {
+					goto keluar;
+				}
+				if (temp->next == NULL) {
+					printf("\n ID yang anda pilih tidak ada, mohon masukkan ID dengan benar!\n ");
+					system("pause");
+					menu_utama();
+				}
+			}
+			keluar:
+			node->next = temp->next;
+			printf("\n Data mahasiswa dengan ID %i berhasil dihapus!\n", temp->id);
+			id_awal = id_awal - 1;
+			free(temp);
+		}
+	}
+}
+
+//====================================================== ALGORITMA UPDATE ====
+void updatehead() {
+	
+}
+
+void updatetail() {
+	
+}
+
+void updateposisi() {
+	
+}
+
+void updateid() {
+	struct data *temp, *node, *temp_id;
+	int i, id_baca;
+	node = (struct data *) malloc(sizeof(struct data));
+	
+	printf("\n Pilih ID data mahasiswa yang akan diupdate : ");
+	scanf("%i", &id_baca);
+	
+	node->id = id_baca;
+
+	printf("\n Masukkan data baru untuk ID %i\n", node->id);
+	printf(" NIM\t\t: ");
+	scanf("%i", &node->nim);
+	printf(" Nama Lengkap\t: ");
+	fflush(stdin);
+	gets(node->nama);
+	printf(" Umur\t\t: ");
+	scanf("%i", &node->umur);
+	printf(" Alamat\t\t: ");
+	scanf("%s", &node->alamat);
+	//tambahkan auto detect prodi
+	printf(" Prodi\t\t: ");
+	scanf("%s", &node->prodi);
+
+	temp_id = node->id;
+	node->next = NULL;
+	if (id_baca == start->id) {
+		node->next = start;
+		start = node;
+		temp = start;
+		for (i = 0; i < 9999; i++) {
+			node = temp;
+			temp = temp->next;
+			if (id_baca == temp->id) {
+				goto keluarstart;
+			}
+		}
+		keluarstart:
+		node->next = temp->next;
+		printf("\n Data dengan ID %i berhasil di update!\n", temp->id);
+		free(temp);
+	} else {
+		if (id_baca == start->id) {
+			node->next = start;
+			start = node;
+		} else {
+			for (i = 1, temp = start; i < 9999; i++) {
+				temp = temp->next;
+				if (id_baca == temp->id) {
+					goto keluarinsert;
+				}
+				if (temp->next == NULL) {
+					printf("\n ID yang anda pilih tidak ada, mohon masukkan ID dengan benar!\n ");
+					system("pause");
+					menu_utama();
+				}
+			}
+			keluarinsert:
+			node->next = temp->next;
+			temp->next = node;
+		}
+		temp = start;
+		for (i = 1; i < 9999; i++) {
+			node = temp;
+			temp = temp->next;
+			if (id_baca == temp->id) {
+				goto keluarhapus;
+			}
+			if (temp->next == NULL) {
+				printf("\n ID yang anda pilih tidak ada, mohon masukkan ID dengan benar!\n ");
+				system("pause");
+				menu_utama();
+			}
+		}
+		keluarhapus:
+		node->next = temp->next;
+		printf("\n Data dengan ID %i berhasil di update!\n", temp->id);
+		free(temp);
+	}
+}
+
+void sortingasc() {
+	struct data *node, *temp, *a, *b, *c;
+	char simpanstring[200];
+	int i, j;
+
+	if (start == NULL) {
+		printf(" Sepertinya belum ada data apapun, data akan muncul disini!\n");
+	} else {
+	    for (i = 0; i < 9999; i++) {
+	    	node = start;
+	    	while(node != NULL) {
+	    		temp = node;
+				while (temp->next != NULL) {
+		           	if(temp->id > temp->next->id) {
+		              	a = temp->id;
+		              	temp->id = temp->next->id;
+		              	temp->next->id = a;
+		              	
+		              	b = temp->nim;
+		              	temp->nim = temp->next->nim;
+		              	temp->next->nim = b;
+		              	
+		              	c = temp->umur;
+		              	temp->umur = temp->next->umur;
+		              	temp->next->umur = c;
+		              	
+		              	strcpy(simpanstring, temp->nama);
+						strcpy(temp->nama, temp->next->nama);
+						strcpy(temp->next->nama, simpanstring);
+						
+						strcpy(simpanstring, temp->alamat);
+						strcpy(temp->alamat, temp->next->alamat);
+						strcpy(temp->next->alamat, simpanstring);
+						
+						strcpy(simpanstring, temp->prodi);
+						strcpy(temp->prodi, temp->next->prodi);
+						strcpy(temp->next->prodi, simpanstring);
+		        	}
+		        	temp = temp->next;
+				}
+				node = node->next;
+			}
+		}
+		listdoang();
+	}
+}
+
+void sortingdes() {
+	struct data *node, *temp, *a, *b, *c;
+	char simpanstring[200];
+	int i, j;
+
+	if (start == NULL) {
+		printf(" Sepertinya belum ada data apapun, data akan muncul disini!\n");
+	} else {
+	    for (i = 0; i < 9999; i++) {
+	    	node = start;
+	    	while(node != NULL) {
+	    		temp = node;
+				while (temp->next != NULL) {
+		           	if(temp->id < temp->next->id) {
+		              	a = temp->id;
+		              	temp->id = temp->next->id;
+		              	temp->next->id = a;
+		              	
+		              	b = temp->nim;
+		              	temp->nim = temp->next->nim;
+		              	temp->next->nim = b;
+		              	
+		              	c = temp->umur;
+		              	temp->umur = temp->next->umur;
+		              	temp->next->umur = c;
+		              	
+		              	strcpy(simpanstring, temp->nama);
+						strcpy(temp->nama, temp->next->nama);
+						strcpy(temp->next->nama, simpanstring);
+						
+						strcpy(simpanstring, temp->alamat);
+						strcpy(temp->alamat, temp->next->alamat);
+						strcpy(temp->next->alamat, simpanstring);
+						
+						strcpy(simpanstring, temp->prodi);
+						strcpy(temp->prodi, temp->next->prodi);
+						strcpy(temp->next->prodi, simpanstring);
+		        	}
+		        	temp = temp->next;
+				}
+				node = node->next;
+			}
+		}
+		listdoang();
+	}
+}
+
+void search() {
+	struct data *node, *temp;
+	int i, id_baca;
+
+	if (start == NULL) {
+		printf(" Sepertinya belum ada data apapun, silakan input terlebih dahulu!");
+		menu_utama();
+	} else {
+		printf("\n Pilih ID data mahasiswa yang dicari : ");
+		scanf("%i", &id_baca);
+		if (id_baca == start->id) {
+			temp = start;
+			printf("\n Data mahasiswa dengan ID %i berhasil ditemukan!", temp->id);
+			printf("\n ID\t\t: %i\n NIM\t\t: %i\n Nama Lengkap\t: %s\n Umur\t\t: %i\n Alamat\t\t: %s\n Prodi\t\t: %s\n\n", temp->id, temp->nim, temp->nama, temp->umur, temp->alamat, temp->prodi);
+		} else {
+			temp = start;
+			for (i = 1; i < 9999; i++) {
+				node = temp;
+				temp = temp->next;
+				if (id_baca == temp->id) {
+					goto keluar;
+				}
+				if (temp->next == NULL) {
+					printf("\n ID yang anda pilih tidak ada, mohon masukkan ID dengan benar!\n ");
+					system("pause");
+					menu_utama();
+				}
+			}
+			keluar:
+			printf("\n Data mahasiswa dengan ID %i berhasil ditemukan!", temp->id);
+			printf("\n ID\t\t: %i\n NIM\t\t: %i\n Nama Lengkap\t: %s\n Umur\t\t: %i\n Alamat\t\t: %s\n Prodi\t\t: %s\n\n", temp->id, temp->nim, temp->nama, temp->umur, temp->alamat, temp->prodi);
+		}
+	}
+}
+
+
+//============================================================= VOID MAIN ====
+void main() {
+	menu_utama();
+}
